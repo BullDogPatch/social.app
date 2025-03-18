@@ -1,7 +1,5 @@
 @import 'tailwindcss';
 
-@import 'tailwindcss';
-
 @layer utilities {
   @keyframes blink {
     0%,
@@ -37,4 +35,8 @@
 .reveal.visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+:root {
+  background-color: black;
 }

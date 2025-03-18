@@ -21,22 +21,26 @@ const fetchPosts = async (): Promise<Post[]> => {
   return data;
 };
 
-const PostList = () => {
+export const PostList = () => {
   const { data, error, isLoading } = useQuery<Post[], Error>({
     queryKey: ['posts'],
     queryFn: fetchPosts,
   });
 
-  if (isLoading) return <div>Loading posts...</div>;
+  if (isLoading) {
+    return <div> Loading posts...</div>;
+  }
 
-  if (error) return <div>Error {error.message}</div>;
+  if (error) {
+    return <div> Error: {error.message}</div>;
+  }
 
   console.log(data);
 
   return (
-    <div>
-      {data?.map((post) => (
-        <PostItem key={post.id} post={post} />
+    <div className='flex flex-wrap gap-6 justify-center'>
+      {data?.map((post, key) => (
+        <PostItem post={post} key={key} />
       ))}
     </div>
   );
