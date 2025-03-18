@@ -55,3 +55,5 @@ const PostDetail = ({ postId }: Props) => {
 };
 
 export default PostDetail;
+
+// 1:41
