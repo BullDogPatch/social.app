@@ -122,7 +122,6 @@ export const CommentSection = ({ postId }: Props) => {
   return (
     <div className='mt-6'>
       <h3 className='text-2xl font-semibold mb-4'>Comments</h3>
-      {/* Create Comment Section */}
       {user ? (
         <form onSubmit={handleSubmit} className='mb-4'>
           <textarea
@@ -148,7 +147,6 @@ export const CommentSection = ({ postId }: Props) => {
         </p>
       )}
 
-      {/* Comments Display Section */}
       <div className='space-y-4'>
         {commentTree.map((comment, key) => (
           <CommentItem key={key} comment={comment} postId={postId} />

@@ -8,8 +8,6 @@ interface Props {
 }
 
 const CommentItem = ({ comment, postId }: Props) => {
-  console.log('Comment content:', comment.content);
-  console.log('Type of comment.content:', typeof comment.content);
   return (
     <div>
       <div>
