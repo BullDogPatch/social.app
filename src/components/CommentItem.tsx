@@ -1,0 +1,26 @@
+import { Comment } from './CommentSection';
+
+interface Props {
+  comment: Comment & {
+    children?: Comment[];
+  };
+  postId: number;
+}
+
+const CommentItem = ({ comment, postId }: Props) => {
+  console.log('Comment content:', comment.content);
+  console.log('Type of comment.content:', typeof comment.content);
+  return (
+    <div>
+      <div>
+        <div>
+          <span>{comment.author}</span>
+          <span>{new Date(comment.created_at).toLocaleDateString()}</span>
+        </div>
+        <p>{comment.content}</p>
+      </div>
+    </div>
+  );
+};
+
+export default CommentItem;
