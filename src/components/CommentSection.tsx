@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '../supabase-client';
 import CommentItem from './CommentItem';
 
@@ -57,6 +57,8 @@ export const CommentSection = ({ postId }: Props) => {
   const [newCommentText, setNewCommentText] = useState<string>('');
   const { user } = useAuth();
 
+  const queryClient = useQueryClient();
+
   const {
     data: comments,
     isLoading,
@@ -75,6 +77,8 @@ export const CommentSection = ({ postId }: Props) => {
         user?.id,
         user?.user_metadata?.user_name
       ),
+    onSuccess: () =>
+      queryClient.invalidateQueries({ queryKey: ['comments', postId] }),
   });
 
   const handleSubmit = (e: React.FormEvent) => {
