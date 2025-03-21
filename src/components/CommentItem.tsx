@@ -15,7 +15,9 @@ const CommentItem = ({ comment, postId }: Props) => {
           <span>{comment.author}</span>
           <span>{new Date(comment.created_at).toLocaleDateString()}</span>
         </div>
-        <p>{comment.content}</p>
+        <p>
+          {comment.content} {postId}
+        </p>
       </div>
     </div>
   );
