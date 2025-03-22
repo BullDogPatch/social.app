@@ -34,6 +34,7 @@ const createReply = async (
 const CommentItem = ({ comment, postId }: Props) => {
   const [showReply, setShowReply] = useState<boolean>(false);
   const [replyText, setReplyText] = useState<string>('');
+  const [isCollapsed, setIsCollapsed] = useState<boolean>(false);
 
   const queryClient = useQueryClient();
 
@@ -75,7 +76,7 @@ const CommentItem = ({ comment, postId }: Props) => {
         <p className='text-gray-300'>{comment.content}</p>
         <button
           onClick={() => setShowReply((prev) => !prev)}
-          className='text-blue-500 text-sm mt-1'
+          className='text-blue-500 text-sm mt-1 cursor-pointer'
         >
           {showReply ? 'Cancel' : 'Reply'}
         </button>
@@ -91,12 +92,60 @@ const CommentItem = ({ comment, postId }: Props) => {
           />
           <button
             type='submit'
-            className='mt-1 bg-blue-500 text-white px-3 py-1 rounded'
+            className='mt-1 bg-blue-500 text-white px-3 py-1 rounded cursor-pointer'
           >
             {isPending ? 'Posting...' : 'Post Reply'}
           </button>
           {isError && <p className='text-red-500'>Error posting reply.</p>}
         </form>
+      )}
+      {comment.children && comment.children.length > 0 && (
+        <div>
+          <button
+            onClick={() => setIsCollapsed((prev) => !prev)}
+            title={isCollapsed ? 'Hide Replies' : 'Show Replies'}
+          >
+            {isCollapsed ? (
+              <svg
+                xmlns='http://www.w3.org/2000/svg'
+                fill='none'
+                viewBox='0 0 24 24'
+                strokeWidth={2}
+                stroke='currentColor'
+                className='w-4 h-4'
+              >
+                <path
+                  strokeLinecap='round'
+                  strokeLinejoin='round'
+                  d='M19 9l-7 7-7-7'
+                />
+              </svg>
+            ) : (
+              <svg
+                xmlns='http://www.w3.org/2000/svg'
+                fill='none'
+                viewBox='0 0 24 24'
+                strokeWidth={2}
+                stroke='currentColor'
+                className='w-4 h-4'
+              >
+                <path
+                  strokeLinecap='round'
+                  strokeLinejoin='round'
+                  d='M5 15l7-7 7 7'
+                />
+              </svg>
+            )}
+          </button>
+
+          {!isCollapsed && (
+            <div className='space-y-2'>
+              {comment.children.map((c, key) => (
+                <CommentItem key={key} comment={c} postId={postId} />
+              ))}
+            </div>
+          )}
+        </div>
       )}
     </div>
   );
